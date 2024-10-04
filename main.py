@@ -22,7 +22,9 @@ while game_is_on:
             if state in all_states:
                 all_states.remove(state)
         not_guessed_states = pandas.DataFrame(all_states)
+        not_guessed_states.rename(columns={0: "States to Learn"}, inplace=True)
         not_guessed_states.to_csv("states_to_learn.csv")
+        print(not_guessed_states)
         break
     if answer in all_states:
         state_data = states[states.state == answer]
