@@ -18,14 +18,12 @@ all_states = states.state.to_list()
 while game_is_on:
     answer = screen.textinput(title=f"States guessed {len(states_guessed)}/50", prompt="Guess a State's name:").title()
     if answer == "Exit":
-        for state in states_guessed:
-            if state in all_states:
-                all_states.remove(state)
-        not_guessed_states = pandas.DataFrame(all_states)
+        missing_states = [state for state in all_states if state not in states_guessed]
+        not_guessed_states = pandas.DataFrame(missing_states)
         not_guessed_states.rename(columns={0: "States to Learn"}, inplace=True)
         not_guessed_states.to_csv("states_to_learn.csv")
-        print(not_guessed_states)
         break
+
     if answer in all_states:
         state_data = states[states.state == answer]
         t.goto(state_data.x.item(), state_data.y.item())
